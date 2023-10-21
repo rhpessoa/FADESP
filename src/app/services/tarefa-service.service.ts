@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of  } from 'rxjs';
 import { Task } from '../models/tarefa.model';
 import { throwError } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -50,11 +51,18 @@ export class TarefaService {
     }
   }
 
-  saveTask(task: Task): void {
+  saveTask(task: Task): Observable<boolean> {
+    const taskId = uuidv4();
+    task.id = taskId;
     const savedTarefas = JSON.parse(localStorage.getItem('tasks') || '[]');
     savedTarefas.push(task);
     localStorage.setItem('tasks', JSON.stringify(savedTarefas));
+    return new Observable((observer) => {
+      observer.next(true);
+      observer.complete();
+    });
   }
+
 
   private loadAndSaveDataFromJson() {
     this.http.get<Task[]>(this.apiUrl).subscribe((data) => {
