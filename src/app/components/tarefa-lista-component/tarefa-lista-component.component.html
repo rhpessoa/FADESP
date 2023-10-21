@@ -4,58 +4,72 @@
   <div style="height:100%; width:100%;">
 
     <div style="display:flex;align-items:center; width: 100%; height: 8%; border-bottom: 1px solid rgba(0,0,0,.12);">
-      <span style="font-size: 1.3rem; font-weight: 600; padding-left:1rem;">Lista de Tarefas</span>
+      <span style="font-size: 1.3rem; font-weight: 600; padding-left:1.5rem;">Lista de Tarefas</span>
     </div>
-
-    <div style="width: 100%; height: calc(92% - 58px);">
+    <form [formGroup]="form" style="display:flex;align-items:center; justify-content:end; width: 100%; height: 6%; border-bottom: 1px solid rgba(0,0,0,.12);">
+      <mat-form-field style=" padding-top:1rem;padding-right: 1.3rem;">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" (selectionChange)="onStatusChange($event)">
+          <mat-option value="">Todos</mat-option>
+          <mat-option *ngFor="let statusOption of statusOptions" [value]="statusOption">
+            {{ statusOption }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <div style="width: 100%; height: calc(85% - 57px);">
       <div style="max-height: 100%; overflow-y: auto; ">
         <table mat-table [dataSource]="dataSource" style="width: 100%;">
           <ng-container matColumnDef="isDone">
             <th style="width:5%;" class="table-row-element" mat-header-cell *matHeaderCellDef></th>
-            <td class="table-row-element" style="width: 5%;" mat-cell *matCellDef="let tarefa">
-              <mat-checkbox
-                [checked]="tarefa.isDone"
-                (change)="onCheckboxChange($event, tarefa)">
+            <td class="table-row-element" style="width: 5%;" mat-cell *matCellDef="let task">
+              <mat-checkbox [checked]="task.isDone"
+                            (change)="onCheckboxChange($event, task)">
               </mat-checkbox>
             </td>
           </ng-container>
           <ng-container matColumnDef="name">
             <th class="table-row-element" style="width: 18%;" mat-header-cell *matHeaderCellDef>Tarefas</th>
-            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let tarefa">
-              {{ tarefa.nome }}
+            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let task">
+              {{ task.nome }}
             </td>
           </ng-container>
           <ng-container matColumnDef="cpf">
             <th class="table-row-element" style="width: 18%;" mat-header-cell *matHeaderCellDef>CPF</th>
-            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let tarefa">
-              {{ tarefa.cpf }}
+            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let task">
+              {{ task.cpf }}
             </td>
           </ng-container>
           <ng-container matColumnDef="responsible">
             <th class="table-row-element" style="width: 18%;" mat-header-cell *matHeaderCellDef>Responsável</th>
-            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let tarefa">
-              {{ tarefa.responsavel }}
+            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let task">
+              {{ task.responsavel }}
             </td>
           </ng-container>
           <ng-container matColumnDef="deadline">
             <th class="table-row-element" style="width: 18%;" mat-header-cell *matHeaderCellDef>Prazo de Entrega</th>
-            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let tarefa">
-              {{ tarefa.prazo }}
+            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let task">
+              {{ task.prazo }}
             </td>
           </ng-container>
           <ng-container matColumnDef="status">
             <th class="table-row-element" style="width: 18%;" mat-header-cell *matHeaderCellDef>Status</th>
-            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let tarefa">
-              <a [ngClass]="getStatusClass(tarefa.status)" style="font-size: 0.9rem; border-radius: 10px; padding: 0.1rem 0.5rem 0.1rem 0.5rem;">{{ tarefa.status }}</a>
+            <td class="table-row-element" style="width: 18%;" mat-cell *matCellDef="let task">
+              <a [ngClass]="getStatusClass(task.status)" style="font-size: 0.9rem; border-radius: 10px; padding: 0.1rem 0.5rem 0.1rem 0.5rem;">{{ task.status }}</a>
             </td>
           </ng-container>
           <ng-container matColumnDef="deleteTask">
-            <th class="table-row-icon" style="width: 5%;"  mat-header-cell *matHeaderCellDef></th>
-            <td class="table-row-icon" style="width: 5%;" mat-cell *matCellDef="let tarefa">
-              <a style="cursor:pointer" (click)="itemActionDeleteClick(tarefa.id)">
+            <th class="table-row-icon" style="width: 5%;" mat-header-cell *matHeaderCellDef></th>
+            <td class="table-row-icon" style="width: 5%;" mat-cell *matCellDef="let task">
+              <a style="cursor:pointer" (click)="itemActionDeleteClick(task.id)">
                 <mat-icon matTooltip="Deletar Tarefa">delete</mat-icon>
               </a>
             </td>
+          </ng-container>
+          <ng-container matNoDataRow *matNoDataRow>
+            <tr class="no-data-row">
+              <td colspan="7">Nenhum dado encontrado ou filtro não retornou resultados.</td>
+            </tr>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr class="table-row-cell" mat-row *matRowDef="let row; columns: displayedColumns;" style="text-align:center"></tr>
@@ -64,8 +78,7 @@
     </div>
 
     <div style="width: 100%; border-top: 1px solid rgba(0,0,0,.12);">
-      <mat-paginator
-                     style="background-color: #F7F7F7;"
+      <mat-paginator style="background-color: #F7F7F7;"
                      [pageSizeOptions]="[05, 10, 15, 20]"
                      [showFirstLastButtons]="true">
       </mat-paginator>

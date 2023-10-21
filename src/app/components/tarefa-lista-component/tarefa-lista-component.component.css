@@ -36,3 +36,11 @@ td.mat-cell {
 .expired {
   background-color: #FEECED;
 }
+
+.no-data-row {
+  font-size: 1.6rem;
+  height: 5rem;
+  text-align: center;
+  color: gray;
+  background-color: #f1f1f1;
+}
