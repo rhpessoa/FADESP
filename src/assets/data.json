@@ -1,0 +1,39 @@
+[
+  {
+    "id": "a62e99a5-7c82-4ff7-9d8e-f12843949678",
+    "nome": "Tarefa 1",
+    "cpf": "123.456.789-00",
+    "responsavel": "João",
+    "prazo": "2023-10-31",
+    "status": "Concluído",
+    "isDone": true
+  },
+  {
+    "id": "9a3be899-0c85-41a4-9cc4-ea5a5053929b",
+    "nome": "Tarefa 2",
+    "cpf": "987.654.321-00",
+    "responsavel": "Maria",
+    "prazo": "2023-11-15",
+    "status": "Aberta",
+    "isDone": false
+  },
+  {
+    "id": "654308f4-b370-46d9-819f-48a3dd6f49c3",
+    "nome": "Tarefa 3",
+    "cpf": "555.555.555-55",
+    "responsavel": "Pedro",
+    "prazo": "2023-10-25",
+    "status": "Expirada",
+    "isDone": false
+  },
+  {
+    "id": "c7f42172-c387-4b72-9e84-6aa9091a7e1a",
+    "nome": "Tarefa 4",
+    "cpf": "999.888.777-66",
+    "responsavel": "Ana",
+    "prazo": "2023-10-28",
+    "status": "Aberta",
+    "isDone": false
+  }
+
+]
