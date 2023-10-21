@@ -1,0 +1,38 @@
+
+td.mat-cell, th.mat-header-cell {
+  text-align: center;
+  justify-content: center;
+}
+.mat-table {
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.mat-sort-header-container {
+  justify-content: center;
+}
+
+th.mat-header-cell {
+  color:#1E2224;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+td.mat-cell {
+  color: #585858;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.finish {
+  background-color: #C3F7D6;
+}
+
+.open {
+  background-color: #D4ECFF;
+}
+
+.expired {
+  background-color: #FEECED;
+}
