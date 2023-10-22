@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
+import { NovaTarefaFormService } from './nova-tarefa-form/nova-tarefa-form.service';
 
 @Component({
   selector: 'app-tarefa-lista-component',
@@ -23,6 +24,7 @@ export class TarefaListaComponentComponent implements OnInit {
 
   constructor(
     private tarefaService: TarefaService,
+    private novaTarefaFormService: NovaTarefaFormService,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
@@ -53,7 +55,6 @@ export class TarefaListaComponentComponent implements OnInit {
   onCheckboxChange(event: MatCheckboxChange, task: Task): void {
     task.isDone = event.checked;
     this.tarefaService.updateTask(task).subscribe(updatedTask => {
-      console.log(updatedTask)
     });
   }
 
@@ -66,7 +67,21 @@ export class TarefaListaComponentComponent implements OnInit {
     return classList;
   }
 
+  formatCPF(cpf: string): string {
+    if (cpf && cpf.length === 11) {
+      return cpf.slice(0, 3) + '.' + cpf.slice(3, 6) + '.' + cpf.slice(6, 9) + '-' + cpf.slice(9);
+    }
+    return cpf;
+  }
+
   onStatusChange(event: MatSelectChange): void {
     this.dataSource.filter = (event.value);
   }
+  openNewTask() {
+    this.novaTarefaFormService.showDialog('')
+      .subscribe((result) => {
+        this.loadData();
+    })
+  }
+  
 }
