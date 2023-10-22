@@ -4,6 +4,7 @@ import { Observable, of  } from 'rxjs';
 import { Task } from '../models/tarefa.model';
 import { throwError } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,19 +22,45 @@ export class TarefaService {
 
   getTasks(): Observable<Task[]> {
     const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      return of(JSON.parse(savedTasks));
-    }
-    return this.http.get<Task[]>(this.apiUrl);
+    const tasksObservable = savedTasks
+      ? of(JSON.parse(savedTasks) as Task[])
+      : this.http.get<Task[]>(this.apiUrl);
+    return tasksObservable.pipe(
+      map((tasks: Task[]) => {
+        const currentDate = new Date();
+        tasks.forEach((task: Task) => {
+          const deadlineDate = new Date(task.deadline);
+          if (this.isDeadlineExpired(deadlineDate, currentDate)) {
+            task.status = 'Expirada';
+          }
+        });
+        return tasks;
+      })
+    );
+  }
+
+
+
+  private isDeadlineExpired(deadline: Date, currentDate: Date): boolean {
+    const deadlineDate: Date = new Date(deadline);
+    return deadlineDate < currentDate;
   }
 
   updateTask(task: Task): Observable<Task> {
     const savedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
     const index = savedTasks.findIndex((t: Task) => t.id === task.id);
     if (index !== -1) {
-      if (task.isDone) task.status = "Concluído";
+      if (task.isDone) {
+        task.status = "Concluído"
+      }
       else {
-        task.status = "Aberta";
+        const currentDate = new Date();
+        const deadlineDate = new Date(task.deadline);
+        if (this.isDeadlineExpired(deadlineDate, currentDate)) {
+          task.status = 'Expirada';
+        } else {
+          task.status = 'Aberta';
+        }
       }
       savedTasks[index] = task;
       localStorage.setItem('tasks', JSON.stringify(savedTasks));
