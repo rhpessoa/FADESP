@@ -3,7 +3,7 @@ export interface Task {
   name: string;
   cpf: string;
   responsible: string;
-  deadline: string;
+  deadline: Date;
   status: string;
   isDone: boolean;
 }
