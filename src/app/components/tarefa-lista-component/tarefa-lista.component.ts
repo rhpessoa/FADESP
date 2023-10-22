@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Task } from '../../models/tarefa.model';
-import { TarefaService } from '../../services/tarefa-service.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { NovaTarefaFormService } from './nova-tarefa-form/nova-tarefa-form.service';
 import { ConfirmService } from '../confirm-component/confirm.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TarefaService } from '../../services/tarefa.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 
 @Component({
@@ -15,6 +17,7 @@ import { ConfirmService } from '../confirm-component/confirm.service';
   templateUrl: './tarefa-lista.component.html',
   styleUrls: ['./tarefa-lista.component.css']
 })
+
 export class TarefaListaComponent implements OnInit {
   displayedColumns: string[] = ['isDone', 'name', 'cpf', 'responsible', 'deadline', 'status', 'deleteTask'];
   dataSource!: MatTableDataSource<Task>;
@@ -29,7 +32,8 @@ export class TarefaListaComponent implements OnInit {
     private tarefaService: TarefaService,
     private novaTarefaFormService: NovaTarefaFormService,
     private confirmService: ConfirmService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackbarService: SnackbarService
   ) {
     this.form = this.fb.group({
       status: ['']
@@ -37,6 +41,7 @@ export class TarefaListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = 'Itens por página:';
     this.loadData();
   }
 
@@ -57,6 +62,7 @@ export class TarefaListaComponent implements OnInit {
         if (confirmed) {
           this.tarefaService.deleteTask(taskId);
           this.loadData();
+          this.snackbarService.showSuccessMessage("A tarefa foi deletada com sucesso!");
         }
       });
   }
@@ -72,7 +78,7 @@ export class TarefaListaComponent implements OnInit {
           this.tarefaService.updateTask(task)
             .subscribe(updatedTask => {
               if (updatedTask) {
-                // Implementar mensagem de alerta de sucesso.
+                this.snackbarService.showSuccessMessage("Alteração no status da tarefa foi realizada com sucesso!");
               }
             });
         }
