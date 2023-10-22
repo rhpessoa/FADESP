@@ -5,7 +5,7 @@
     "cpf": "12345678900",
     "responsible": "João",
     "deadline": "2023-10-31",
-    "status": "Concluído",
+    "status": "concluido",
     "isDone": true
   },
   {
@@ -14,7 +14,7 @@
     "cpf": "98765432100",
     "responsible": "Maria",
     "deadline": "2023-11-15",
-    "status": "Aberta",
+    "status": "aberta",
     "isDone": false
   },
   {
@@ -23,7 +23,7 @@
     "cpf": "55555555555",
     "responsible": "Pedro",
     "deadline": "2023-10-25",
-    "status": "Expirada",
+    "status": "expirada",
     "isDone": false
   },
   {
@@ -32,8 +32,7 @@
     "cpf": "99988877766",
     "responsible": "Ana",
     "deadline": "2023-10-28",
-    "status": "Aberta",
+    "status": "aberta",
     "isDone": false
   }
-
 ]
