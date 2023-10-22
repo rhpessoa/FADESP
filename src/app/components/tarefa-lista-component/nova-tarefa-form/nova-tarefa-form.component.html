@@ -1,0 +1,67 @@
+<form class="container-modal" [formGroup]="form">
+  <div class="container-header">
+    <h1>Criar Tarefa</h1>
+  </div>
+  <div class="container-form-input">
+    <mat-form-field class="mat-form-field-input">
+      <mat-label>Nome</mat-label>
+      <input matInput
+             formControlName="name"
+             type="text"
+             autocomplete="off"
+             required />
+      <mat-error *ngIf="formSubmitted && form.get('name')?.hasError('required')">
+        Campo obrigatório.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mat-form-field-input">
+      <mat-label>CPF</mat-label>
+      <input matInput
+             formControlName="cpf"
+             type="text"
+             autocomplete="off"
+             maxlength="11"
+             required />
+      <mat-error *ngIf="formSubmitted && form.get('cpf')?.hasError('required')">
+        Campo obrigatório.
+      </mat-error>
+      <mat-error *ngIf="form.get('cpf')?.hasError('pattern')">
+        CPF inválido.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mat-form-field-input">
+      <mat-label>Responsável</mat-label>
+      <input matInput
+             formControlName="responsible"
+             type="text"
+             autocomplete="off"
+             required />
+      <mat-error *ngIf="formSubmitted && form.get('responsible')?.hasError('required')">
+        Campo obrigatório.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mat-form-field-input">
+      <mat-label>Prazo</mat-label>
+      <input matInput
+             formControlName="deadline"
+             [matDatepicker]="picker"
+             autocomplete="off"
+             (click)="picker.open()"
+             [readonly]="true"
+             required />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="formSubmitted && form.get('deadline')?.hasError('required')">
+        Campo obrigatório.
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="container-buttons">
+    <div class="container-button">
+      <button class="cancel-button" (click)="closeDialog(false)" type="button">CANCELAR</button>
+    </div>
+    <div class="container-button">
+      <button class="submit-button" (click)="submitTask()">SALVAR</button>
+    </div>
+  </div>
+</form>
