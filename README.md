@@ -7,6 +7,8 @@ Esse projeto foi criado utilizando o [Angular CLI](https://github.com/angular/an
  - 1° Utilize o comando `npm install` para instalar todas as dependências necessárias;
 
  - 2° Utilize o comando `ng serve` para iniciar o servidor de desenvolvimento. Para visualizá-lo use a url `http://localhost:4200/` no navegador.
+   
+ - Obs:. Lembre-se de que é necessário utilizar o node na versão v16.16.0.
 
 # Requisitos do projeto.
 
