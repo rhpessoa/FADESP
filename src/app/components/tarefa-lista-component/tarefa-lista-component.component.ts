@@ -19,6 +19,7 @@ export class TarefaListaComponentComponent implements OnInit {
   noDataFound: boolean = true;
   form!: FormGroup;
   statusOptions: string[] = ['Concluído', 'Aberta', 'Expirada'];
+  private currentDate: Date = new Date();
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -40,6 +41,7 @@ export class TarefaListaComponentComponent implements OnInit {
     this.tarefaService.getTasks()
       .subscribe(tasks => {
         if (tasks) {
+          console.log(tasks);
           this.noDataFound = (tasks === null || tasks.length === 0);
           this.dataSource = new MatTableDataSource(tasks);
           this.dataSource.paginator = this.paginator;
@@ -55,6 +57,7 @@ export class TarefaListaComponentComponent implements OnInit {
   onCheckboxChange(event: MatCheckboxChange, task: Task): void {
     task.isDone = event.checked;
     this.tarefaService.updateTask(task).subscribe(updatedTask => {
+      console.log(updatedTask);
     });
   }
 
@@ -72,6 +75,11 @@ export class TarefaListaComponentComponent implements OnInit {
       return cpf.slice(0, 3) + '.' + cpf.slice(3, 6) + '.' + cpf.slice(6, 9) + '-' + cpf.slice(9);
     }
     return cpf;
+  }
+
+  private isDeadlineExpired(deadline: string): boolean {
+    const deadlineDate: Date = new Date(deadline);
+    return deadlineDate < this.currentDate;
   }
 
   onStatusChange(event: MatSelectChange): void {

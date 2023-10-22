@@ -53,13 +53,10 @@ export class NovaTarefaFormComponent implements OnInit {
 
   private prepareSave() {
     const formModel = this.form.getRawValue();
-    const ano = formModel.deadline.getFullYear();
-    const mes = (formModel.deadline.getMonth() + 1).toString().padStart(2, '0');
-    const dia = formModel.deadline.getDate().toString().padStart(2, '0');
     this.task.name = formModel.name;
     this.task.responsible = formModel.responsible;
     this.task.cpf = formModel.cpf;
-    this.task.deadline = `${dia}-${mes}-${ano}`;
+    this.task.deadline = formModel.deadline;
     this.task.isDone = false;
     this.task.status = "Aberta";
   }

@@ -45,8 +45,8 @@
           </ng-container>
           <ng-container matColumnDef="deadline">
             <th class="table-row-element"  mat-header-cell *matHeaderCellDef>Prazo de Entrega</th>
-            <td class="table-row-element"  mat-cell *matCellDef="let task">
-              {{ task.deadline }}
+            <td class="table-row-element" mat-cell *matCellDef="let task">
+              {{ task.deadline | date:'yyyy-MM-dd' }}
             </td>
           </ng-container>
           <ng-container matColumnDef="status">
