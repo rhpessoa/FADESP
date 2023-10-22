@@ -2,7 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Task } from '../../../models/tarefa.model';
-import { TarefaService } from '../../../services/tarefa-service.service';
+import { SnackbarService } from '../../../services/snackbar.service';
+import { TarefaService } from '../../../services/tarefa.service';
 import { ConfirmService } from '../../confirm-component/confirm.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class NovaTarefaFormComponent implements OnInit {
     private dialogRef: MatDialogRef<NovaTarefaFormComponent>,
     private fb: FormBuilder,
     private tarefaService: TarefaService,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    private snackbarService: SnackbarService
   )
   {}
 
@@ -47,6 +49,7 @@ export class NovaTarefaFormComponent implements OnInit {
               .subscribe((result) => {
                 if (result) {
                   this.closeDialog(true);
+                  this.snackbarService.showSuccessMessage("A tarefa foi criada com sucesso!");
                 }
               });
           }
