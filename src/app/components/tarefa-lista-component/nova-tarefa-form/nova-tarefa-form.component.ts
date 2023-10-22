@@ -70,8 +70,11 @@ export class NovaTarefaFormComponent implements OnInit {
   private validateDate(control: FormControl) {
     const selectedDate = new Date(control.value);
     const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
     if (selectedDate < currentDate) {
       return { invalidDate: true };
+    } else if (selectedDate == currentDate) {
+      return { invalidDate: false };
     }
     return null;
   }
