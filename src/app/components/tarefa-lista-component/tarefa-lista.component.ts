@@ -7,18 +7,20 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { NovaTarefaFormService } from './nova-tarefa-form/nova-tarefa-form.service';
+import { ConfirmService } from '../confirm-component/confirm.service';
+
 
 @Component({
-  selector: 'app-tarefa-lista-component',
-  templateUrl: './tarefa-lista-component.component.html',
-  styleUrls: ['./tarefa-lista-component.component.css']
+  selector: 'app-tarefa-lista',
+  templateUrl: './tarefa-lista.component.html',
+  styleUrls: ['./tarefa-lista.component.css']
 })
-export class TarefaListaComponentComponent implements OnInit {
+export class TarefaListaComponent implements OnInit {
   displayedColumns: string[] = ['isDone', 'name', 'cpf', 'responsible', 'deadline', 'status', 'deleteTask'];
   dataSource!: MatTableDataSource<Task>;
   noDataFound: boolean = true;
   form!: FormGroup;
-  statusOptions: string[] = ['Concluído', 'Aberta', 'Expirada'];
+  statusOptions: string[] = ['concluido', 'aberta', 'expirada'];
   private currentDate: Date = new Date();
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -26,6 +28,7 @@ export class TarefaListaComponentComponent implements OnInit {
   constructor(
     private tarefaService: TarefaService,
     private novaTarefaFormService: NovaTarefaFormService,
+    private confirmService: ConfirmService,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
@@ -41,7 +44,6 @@ export class TarefaListaComponentComponent implements OnInit {
     this.tarefaService.getTasks()
       .subscribe(tasks => {
         if (tasks) {
-          console.log(tasks);
           this.noDataFound = (tasks === null || tasks.length === 0);
           this.dataSource = new MatTableDataSource(tasks);
           this.dataSource.paginator = this.paginator;
@@ -50,24 +52,55 @@ export class TarefaListaComponentComponent implements OnInit {
   }
 
   itemActionDeleteClick(taskId: string) {
-    this.tarefaService.deleteTask(taskId);
-    this.loadData();
+    this.confirmService.activate("Você tem certeza que quer excluir essa tarefa?")
+      .then((confirmed: boolean) => {
+        if (confirmed) {
+          this.tarefaService.deleteTask(taskId);
+          this.loadData();
+        }
+      });
   }
 
   onCheckboxChange(event: MatCheckboxChange, task: Task): void {
-    task.isDone = event.checked;
-    this.tarefaService.updateTask(task).subscribe(updatedTask => {
-      console.log(updatedTask);
-    });
+    let message = task.isDone
+      ? 'Essa tarefa está marcada com status de concluída. Você tem certeza que quer alterar o status para não concluída?'
+      : "Você tem certeza que quer alterar o status da tarefa para concluída?";
+    this.confirmService.activate(message)
+      .then((confirmed: boolean) => {
+        if (confirmed) {
+          task.isDone = event.checked;
+          this.tarefaService.updateTask(task)
+            .subscribe(updatedTask => {
+              if (updatedTask) {
+                // Implementar mensagem de alerta de sucesso.
+              }
+            });
+        }
+        else {
+          this.loadData();
+        }
+      });
   }
 
   public getStatusClass(status: string) {
     const classList = {
-      'finish': status === 'Concluído',
-      'open': status === 'Aberta',
-      'expired': status === 'Expirada',
+      'finish': status === 'concluido',
+      'open': status === 'aberta',
+      'expired': status === 'expirada',
     };
     return classList;
+  }
+
+  translateStatus(status: string): string {
+    if (status === 'concluido') {
+      return 'Concluído';
+    } else if (status === 'aberta') {
+      return 'Aberta';
+    } else if (status === 'expirada') {
+      return 'Expirada';
+    } else {
+      return status;
+    }
   }
 
   formatCPF(cpf: string): string {
@@ -85,6 +118,7 @@ export class TarefaListaComponentComponent implements OnInit {
   onStatusChange(event: MatSelectChange): void {
     this.dataSource.filter = (event.value);
   }
+
   openNewTask() {
     this.novaTarefaFormService.showDialog('')
       .subscribe((result) => {

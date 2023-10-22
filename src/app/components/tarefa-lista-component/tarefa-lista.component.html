@@ -21,38 +21,40 @@
             <th class="table-row-element-checkbox" mat-header-cell *matHeaderCellDef></th>
             <td class="table-row-element-checkbox" mat-cell *matCellDef="let task">
               <mat-checkbox [checked]="task.isDone"
+                            [disabled]="task.status === 'expirada'"
                             (change)="onCheckboxChange($event, task)">
               </mat-checkbox>
             </td>
           </ng-container>
+
           <ng-container matColumnDef="name">
-            <th class="table-row-element"  mat-header-cell *matHeaderCellDef>Tarefas</th>
+            <th class="table-row-element" mat-header-cell *matHeaderCellDef>Tarefas</th>
             <td class="table-row-element" mat-cell *matCellDef="let task">
               {{ task.name }}
             </td>
           </ng-container>
           <ng-container matColumnDef="cpf">
-            <th class="table-row-element"  mat-header-cell *matHeaderCellDef>CPF</th>
-            <td class="table-row-element"  mat-cell *matCellDef="let task">
+            <th class="table-row-element" mat-header-cell *matHeaderCellDef>CPF</th>
+            <td class="table-row-element" mat-cell *matCellDef="let task">
               {{ formatCPF(task.cpf) }}
             </td>
           </ng-container>
           <ng-container matColumnDef="responsible">
-            <th class="table-row-element"  mat-header-cell *matHeaderCellDef>Responsável</th>
-            <td class="table-row-element"  mat-cell *matCellDef="let task">
+            <th class="table-row-element" mat-header-cell *matHeaderCellDef>Responsável</th>
+            <td class="table-row-element" mat-cell *matCellDef="let task">
               {{ task.responsible }}
             </td>
           </ng-container>
           <ng-container matColumnDef="deadline">
-            <th class="table-row-element"  mat-header-cell *matHeaderCellDef>Prazo de Entrega</th>
+            <th class="table-row-element" mat-header-cell *matHeaderCellDef>Prazo de Entrega</th>
             <td class="table-row-element" mat-cell *matCellDef="let task">
               {{ task.deadline | date:'yyyy-MM-dd' }}
             </td>
           </ng-container>
           <ng-container matColumnDef="status">
-            <th class="table-row-element"mat-header-cell *matHeaderCellDef>Status</th>
+            <th class="table-row-element" mat-header-cell *matHeaderCellDef>Status</th>
             <td class="table-row-element" mat-cell *matCellDef="let task">
-              <a [ngClass]="getStatusClass(task.status)" class="mat-table-status-row-element">{{ task.status }}</a>
+              <a [ngClass]="getStatusClass(task.status)" class="mat-table-status-row-element">{{ translateStatus(task.status) }}</a>
             </td>
           </ng-container>
           <ng-container matColumnDef="deleteTask">

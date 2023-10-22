@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Task } from '../../../models/tarefa.model';
 import { TarefaService } from '../../../services/tarefa-service.service';
+import { ConfirmService } from '../../confirm-component/confirm.service';
 
 @Component({
   selector: 'app-nova-tarefa-form',
@@ -20,18 +21,15 @@ export class NovaTarefaFormComponent implements OnInit {
     private dialogRef: MatDialogRef<NovaTarefaFormComponent>,
     private fb: FormBuilder,
     private tarefaService: TarefaService,
+    private confirmService: ConfirmService
   )
   {}
 
-  initialize(taskId: string,) {
+  initialize(taskId: string) {
   }
 
   ngOnInit() {
     this.createFormGroup();
-  }
-
-  private editOrder(orderId: string) {
-
   }
 
   closeDialog(update: boolean) {
@@ -41,15 +39,20 @@ export class NovaTarefaFormComponent implements OnInit {
   submitTask() {
     this.formSubmitted = true;
     if (this.form.valid) {
-      this.prepareSave();
-      this.tarefaService.saveTask(this.task)
-        .subscribe((result) => {
-          if (result) {
-            this.closeDialog(true);
+      this.confirmService.activate("Você tem certeza que quer criar essa tarefa?")
+        .then((confirmed: boolean) => {
+          if (confirmed) {
+            this.prepareSave();
+            this.tarefaService.saveTask(this.task)
+              .subscribe((result) => {
+                if (result) {
+                  this.closeDialog(true);
+                }
+              });
           }
-      });
+        });
     }
-    }
+  }
 
   private prepareSave() {
     const formModel = this.form.getRawValue();
@@ -58,7 +61,7 @@ export class NovaTarefaFormComponent implements OnInit {
     this.task.cpf = formModel.cpf;
     this.task.deadline = formModel.deadline;
     this.task.isDone = false;
-    this.task.status = "Aberta";
+    this.task.status = "aberta";
   }
 
   private createFormGroup() {
