@@ -21,6 +21,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TarefaListaComponent } from './components/tarefa-lista-component/tarefa-lista.component';
 import { ConfirmComponent } from './components/confirm-component/confirm.component';
 import { ConfirmService } from './components/confirm-component/confirm.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarService } from './services/snackbar.service';
 
 @NgModule({
   declarations: [
@@ -47,11 +49,13 @@ import { ConfirmService } from './components/confirm-component/confirm.service';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSnackBarModule
   ],
   providers: [
     NovaTarefaFormService,
-    ConfirmService
+    ConfirmService,
+    SnackbarService,
   ],
   bootstrap: [AppComponent]
 })
