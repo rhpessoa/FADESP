@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TarefaListaComponentComponent } from './components/tarefa-lista-component/tarefa-lista-component.component';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,12 +18,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NovaTarefaFormComponent } from './components/tarefa-lista-component/nova-tarefa-form/nova-tarefa-form.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { TarefaListaComponent } from './components/tarefa-lista-component/tarefa-lista.component';
+import { ConfirmComponent } from './components/confirm-component/confirm.component';
+import { ConfirmService } from './components/confirm-component/confirm.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TarefaListaComponentComponent,
-    NovaTarefaFormComponent
+    TarefaListaComponent,
+    NovaTarefaFormComponent,
+    ConfirmComponent
   ],
   imports: [
     HttpClientModule,
@@ -47,7 +50,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule
   ],
   providers: [
-    NovaTarefaFormService
+    NovaTarefaFormService,
+    ConfirmService
   ],
   bootstrap: [AppComponent]
 })
