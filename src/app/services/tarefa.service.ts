@@ -90,7 +90,6 @@ export class TarefaService {
     });
   }
 
-
   private loadAndSaveDataFromJson() {
     this.http.get<Task[]>(this.apiUrl).subscribe((data) => {
       localStorage.setItem('tasks', JSON.stringify(data));
