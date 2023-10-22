@@ -23,7 +23,8 @@ import { ConfirmComponent } from './components/confirm-component/confirm.compone
 import { ConfirmService } from './components/confirm-component/confirm.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from './services/snackbar.service';
-
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+export const options: Partial<null | IConfig> | (() => Partial<IConfig>) = null;
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +51,8 @@ import { SnackbarService } from './services/snackbar.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     NovaTarefaFormService,
