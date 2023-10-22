@@ -1,9 +1,9 @@
 export interface Task {
-  isDone: boolean;
   id: string;
-  nome: string;
+  name: string;
   cpf: string;
-  responsavel: string;
-  prazo: string;
+  responsible: string;
+  deadline: string;
   status: string;
+  isDone: boolean;
 }
