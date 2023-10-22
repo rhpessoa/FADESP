@@ -29,9 +29,10 @@ export class TarefaService {
       map((tasks: Task[]) => {
         const currentDate = new Date();
         tasks.forEach((task: Task) => {
-          const deadlineDate = new Date(task.deadline);
-          if (this.isDeadlineExpired(deadlineDate, currentDate)) {
-            task.status = 'expirada';
+          if (this.isDeadlineExpired(task.deadline, currentDate)) {
+            if (task.status !== 'concluido') {
+              task.status = 'expirada';
+            }
           }
         });
         return tasks;
@@ -39,11 +40,15 @@ export class TarefaService {
     );
   }
 
-
-
   private isDeadlineExpired(deadline: Date, currentDate: Date): boolean {
-    const deadlineDate: Date = new Date(deadline);
-    return deadlineDate < currentDate;
+    const deadlineDate = new Date(deadline);
+    const currentDateUtc = new Date(currentDate.toISOString());
+    deadlineDate.setHours(0, 0, 0, 0);
+    currentDateUtc.setHours(0, 0, 0, 0);
+    if (deadlineDate < currentDateUtc) {
+      return true;
+    }
+    return false;
   }
 
   updateTask(task: Task): Observable<Task> {
