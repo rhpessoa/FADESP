@@ -42,6 +42,10 @@ export class TarefaListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginator._intl.itemsPerPageLabel = 'Itens por página:';
+    this.paginator._intl.nextPageLabel = 'Próxima';
+    this.paginator._intl.previousPageLabel = 'Anterior';
+    this.paginator._intl.firstPageLabel = 'Primeira página';
+    this.paginator._intl.lastPageLabel = 'Última página';
     this.loadData();
   }
 
