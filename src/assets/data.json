@@ -4,7 +4,7 @@
     "name": "Tarefa 1",
     "cpf": "12345678900",
     "responsible": "João",
-    "deadline": "2023-10-31",
+    "deadline": "2023-10-31T03:00:00.000Z",
     "status": "concluido",
     "isDone": true
   },
@@ -13,7 +13,7 @@
     "name": "Tarefa 2",
     "cpf": "98765432100",
     "responsible": "Maria",
-    "deadline": "2023-11-15",
+    "deadline": "2023-10-23T03:00:00.000Z",
     "status": "aberta",
     "isDone": false
   },
@@ -22,7 +22,7 @@
     "name": "Tarefa 3",
     "cpf": "55555555555",
     "responsible": "Pedro",
-    "deadline": "2023-10-25",
+    "deadline": "2023-10-21T03:00:00.000Z",
     "status": "expirada",
     "isDone": false
   },
@@ -31,7 +31,7 @@
     "name": "Tarefa 4",
     "cpf": "99988877766",
     "responsible": "Ana",
-    "deadline": "2023-10-28",
+    "deadline": "2023-10-22T03:00:00.000Z",
     "status": "aberta",
     "isDone": false
   }
