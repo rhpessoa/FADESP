@@ -54,6 +54,9 @@
       <mat-error *ngIf="formSubmitted && form.get('deadline')?.hasError('required')">
         Campo obrigatório.
       </mat-error>
+      <mat-error *ngIf="formSubmitted && form.get('deadline')?.hasError('invalidDate')">
+        A data deve ser posterior à data atual.
+      </mat-error>
     </mat-form-field>
   </div>
   <div class="container-buttons">

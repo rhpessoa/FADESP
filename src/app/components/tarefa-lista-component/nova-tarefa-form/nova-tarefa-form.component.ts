@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Task } from '../../../models/tarefa.model';
 import { TarefaService } from '../../../services/tarefa-service.service';
@@ -64,13 +64,22 @@ export class NovaTarefaFormComponent implements OnInit {
     this.task.status = "aberta";
   }
 
+  private validateDate(control: FormControl) {
+    const selectedDate = new Date(control.value);
+    const currentDate = new Date();
+    if (selectedDate < currentDate) {
+      return { invalidDate: true };
+    }
+    return null;
+  }
+
   private createFormGroup() {
     this.form = this.fb.group(
       {
         name: ['', [Validators.required]],
         cpf: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
         responsible: ['', [Validators.required]],
-        deadline: ['', [Validators.required]],
+        deadline: ['', [Validators.required, this.validateDate]],
       },
       {}
     );
