@@ -1,0 +1,16 @@
+
+  <div class="container-header">
+    <h1>É NECESSÁRIO CONFIRMAR AÇÃO</h1>
+  </div>
+  <div class="container-message">
+    <span class="message-text">{{message}}</span>
+  </div>
+  <div class="container-buttons">
+    <div class="container-button">
+      <button class="confirm-button" (click)="closeDialog(true)">CONFIRMAR</button>
+    </div>
+    <div class="container-button">
+      <button class="cancel-button" (click)="closeDialog(false)">CANCELAR</button>
+    </div>
+  </div>
+
