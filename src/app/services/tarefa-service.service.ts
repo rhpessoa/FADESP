@@ -31,7 +31,7 @@ export class TarefaService {
         tasks.forEach((task: Task) => {
           const deadlineDate = new Date(task.deadline);
           if (this.isDeadlineExpired(deadlineDate, currentDate)) {
-            task.status = 'Expirada';
+            task.status = 'expirada';
           }
         });
         return tasks;
@@ -51,15 +51,15 @@ export class TarefaService {
     const index = savedTasks.findIndex((t: Task) => t.id === task.id);
     if (index !== -1) {
       if (task.isDone) {
-        task.status = "Concluído"
+        task.status = "concluido"
       }
       else {
         const currentDate = new Date();
         const deadlineDate = new Date(task.deadline);
         if (this.isDeadlineExpired(deadlineDate, currentDate)) {
-          task.status = 'Expirada';
+          task.status = 'expirada';
         } else {
-          task.status = 'Aberta';
+          task.status = 'aberta';
         }
       }
       savedTasks[index] = task;
