@@ -1,3 +1,68 @@
+.container-app {
+  height: 100vh;
+  width: 100vw;
+}
+.container-list-task {
+  height: 100%;
+  width: 100%;
+}
+.container-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 8%;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+.header-text {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding-left: 1.5rem;
+}
+.container-filter {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+  height: 6%;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+.form-field {
+  padding-top: 1rem;
+  padding-right: 1.3rem;
+}
+.container-mat-table {
+  width: 100%;
+  height: calc(85% - 57px);
+}
+.scroll-mat-table {
+  max-height: 100%;
+  overflow-y: auto;
+}
+.table-row-element-checkbox {
+  width: 5%;
+}
+.table-row-element {
+  width: 18%;
+}
+.table-row-icon {
+  width: 5%;
+}
+.mat-table-status-row-element {
+  font-size: 0.9rem;
+  border-radius: 10px;
+  padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+}
+.finish {
+  background-color: #C3F7D6;
+}
+
+.open {
+  background-color: #D4ECFF;
+}
+
+.expired {
+  background-color: #FEECED;
+}
 
 td.mat-cell, th.mat-header-cell {
   text-align: center;
@@ -25,22 +90,27 @@ td.mat-cell {
   font-size: 1rem;
 }
 
-.finish {
-  background-color: #C3F7D6;
-}
-
-.open {
-  background-color: #D4ECFF;
-}
-
-.expired {
-  background-color: #FEECED;
-}
-
 .no-data-row {
   font-size: 1.6rem;
   height: 5rem;
   text-align: center;
   color: gray;
   background-color: #f1f1f1;
+}
+
+.container-mat-paginator {
+  width: 100%;
+  border-top: 1px solid rgba(0,0,0,.12);
+}
+.mat-paginator {
+  background-color: #F7F7F7;
+}
+.button-add-task {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 4.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
 }
